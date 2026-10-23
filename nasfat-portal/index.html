@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NASFAT Secondary School Portal (Concept by CYBER_SYNTAX)</title>
+<style>:root{--g:#0b6b3a;--g2:#0e8a4b;--gold:#d4a017;--bg:#f4f7f5;--card:#fff;--tx:#1b2620;--mu:#5f6f66;--bd:#e2e8e4}
+body.dark{--bg:#0e1512;--card:#16211c;--tx:#e8f0eb;--mu:#9fb2a7;--bd:#25332c}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+a{color:var(--g2)}button{font:inherit;cursor:pointer}
+.ribbon{background:#111;color:#ffd76a;text-align:center;font-size:.8rem;padding:6px}.ribbon a{color:#fff}
+.top{background:var(--g);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 5vw;position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}.crest{width:40px;height:40px;border-radius:50%;background:var(--gold);color:var(--g);display:grid;place-items:center;font-weight:900}
+.top nav a{color:#fff;text-decoration:none;margin-left:18px;font-weight:600}
+.btn{background:var(--gold);color:#1b1b1b;border:0;border-radius:10px;padding:10px 18px;font-weight:700;text-decoration:none;display:inline-block}
+.btn.g{background:var(--g2);color:#fff}.btn.o{background:none;border:1px solid var(--bd);color:var(--tx)}
+.hero{background:linear-gradient(120deg,rgba(11,107,58,.95),rgba(14,138,75,.85)),repeating-linear-gradient(45deg,#0b6b3a 0 20px,#0a5f34 20px 40px);color:#fff;padding:80px 5vw}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);margin:0 0 12px}.hero p{max-width:600px;font-size:1.1rem}
+.wrap{padding:50px 5vw;max-width:1200px;margin:auto}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px}.card h3{margin-top:0}
+.gal div{height:160px;border-radius:14px;display:flex;align-items:flex-end;padding:12px;color:#fff;font-weight:700}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);font:inherit;margin:6px 0 14px}
+.login{min-height:calc(100vh - 30px);display:grid;place-items:center;padding:30px;background:linear-gradient(135deg,var(--g),#063d21)}
+.lbox{background:var(--card);border-radius:20px;padding:34px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.pw{position:relative}.pw button{position:absolute;right:8px;top:14px;border:0;background:none;color:var(--mu)}
+.err{color:#c0392b;font-size:.9rem;min-height:1.2em}.hint{background:#fff8e1;color:#5d4500;border-radius:10px;padding:10px;font-size:.85rem;margin-top:14px}
+.layout{display:flex;min-height:100vh}
+.side{width:250px;background:var(--g);color:#fff;padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto;flex-shrink:0}
+.side a{display:flex;gap:10px;color:#e6f4ec;text-decoration:none;padding:10px 12px;border-radius:10px;margin:2px 0;font-size:.95rem}.side a.on,.side a:hover{background:rgba(255,255,255,.15);color:#fff}
+.main{flex:1;min-width:0}.bar{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:5}
+.bar .r{display:flex;gap:10px;align-items:center;position:relative}.ib{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;padding:8px 11px;position:relative}
+.dot{position:absolute;top:-5px;right:-5px;background:#e53935;color:#fff;border-radius:50%;font-size:.7rem;width:18px;height:18px;display:grid;place-items:center}
+.content{padding:24px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px}.stat b{font-size:1.6rem;display:block;color:var(--g2)}.stat span{color:var(--mu);font-size:.85rem}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{padding:10px;border-bottom:1px solid var(--bd);text-align:left}th{color:var(--mu);font-weight:600}
+.badge{padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:700}.ok{background:#dcf5e5;color:#11683a}.no{background:#fde2e1;color:#a02622}.pe{background:#fff3cd;color:#7a5a00}
+.prog{height:10px;background:var(--bd);border-radius:10px;overflow:hidden;margin:6px 0 12px}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--g2),var(--gold))}
+.pic{width:64px;height:64px;border-radius:50%;background:var(--gold);color:var(--g);display:grid;place-items:center;font-size:1.5rem;font-weight:800}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;place-items:center;z-index:50;padding:20px}.modal.show{display:grid}
+.mbox{background:var(--card);border-radius:18px;padding:26px;max-width:460px;width:100%;max-height:90vh;overflow:auto}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 20px;border-radius:12px;display:none;z-index:60}
+.notif{position:absolute;right:0;top:44px;width:300px;background:var(--card);border:1px solid var(--bd);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.15);display:none;padding:8px;z-index:9}.notif div{padding:10px;border-bottom:1px solid var(--bd);font-size:.88rem}
+.bars{display:flex;align-items:flex-end;gap:10px;height:180px;padding:20px 0 26px}.bars div{flex:1;background:var(--g2);border-radius:6px 6px 0 0;position:relative}.bars span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:.75rem;color:var(--mu)}.bars em{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:.72rem;font-style:normal}
+.room{display:inline-block;width:70px;padding:10px 0;margin:4px;text-align:center;border-radius:10px;border:2px solid var(--bd);background:var(--card);color:var(--tx)}.room.full{background:#ddd;color:#888;text-decoration:line-through;cursor:not-allowed}.room.sel{border-color:var(--g2);background:#dcf5e5;color:#11683a}
+#mb{display:none;border:0;background:none;font-size:1.5rem;color:var(--tx)}.hide{display:none!important}
+@media(max-width:860px){.side{position:fixed;left:-260px;z-index:30;transition:.25s}.side.open{left:0}#mb{display:block}.top nav{display:none}}
+@media print{.side,.bar,.noprint,.ribbon{display:none!important}.content{padding:0}body{background:#fff;color:#000}}
+</style></head><body>
+<div class="ribbon noprint">Concept project by <a href="https://cyber-syntax.netlify.app" target="_blank" rel="noopener">CYBER_SYNTAX</a>. This is a demo, not the official NASFAT school portal. No real data or payments.</div>
+<div id="public">
+<header class="top"><div class="brand"><div class="crest">N</div>NASFAT Secondary School</div><nav><a href="#about">About</a><a href="#admissions">Admissions</a><a href="#news">News</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a></nav><button class="btn" onclick="go('login')">Student Login</button></header>
+<section class="hero"><h1>Knowledge, Faith &amp; Excellence</h1><p>Welcome to NASFAT Secondary School (concept). We raise disciplined, God-conscious young people who lead in academics, character and service.</p><br><button class="btn" onclick="go('login')">Student Login &rarr;</button> <a class="btn o" style="color:#fff;border-color:#fff" href="#admissions">Admissions</a></section>
+<div class="wrap" id="about"><h2>About our school</h2><div class="grid">
+<div class="card"><h3>&#127891; Academics</h3><p>JSS1 to SS3 with Science, Arts and Commercial departments, preparing students for WAEC, NECO and JAMB.</p></div>
+<div class="card"><h3>&#128332; Islamic values</h3><p>Daily assembly, Qur'an memorisation, Arabic and moral instruction.</p></div>
+<div class="card"><h3>&#127968; Boarding</h3><p>Safe, supervised hostels for boys and girls with house masters and matrons.</p></div>
+<div class="card"><h3>&#9917; Clubs &amp; sports</h3><p>Coding club, debate, JETS, press club, football and athletics.</p></div></div></div>
+<div class="wrap" id="admissions"><h2>Admissions 2026/2027</h2><div class="grid">
+<div class="card"><h3>1. Get the form</h3><p>Admission form: &#8358;10,000 from the bursary.</p></div>
+<div class="card"><h3>2. Entrance exam</h3><p>English, Mathematics and General Studies. Next exam: Saturday 14 Nov 2026.</p></div>
+<div class="card"><h3>3. Interview</h3><p>Successful candidates and parents attend an interview, then pay first-term fees.</p></div></div></div>
+<div class="wrap" id="news"><h2>News &amp; events</h2><div class="grid">
+<div class="card"><small>20 Oct 2026</small><h3>Mid-term break</h3><p>Mid-term break runs 30 Oct to 3 Nov. Boarders may go home with an approved exeat.</p></div>
+<div class="card"><small>15 Oct 2026</small><h3>Coding club wins state contest</h3><p>Our SS2 team placed first in the state schools' web design challenge.</p></div>
+<div class="card"><small>9 Oct 2026</small><h3>WAEC registration open</h3><p>SS3 students should complete WAEC 2027 registration in the portal before 30 Nov.</p></div></div></div>
+<div class="wrap" id="gallery"><h2>Gallery</h2><div class="grid gal">
+<div style="background:linear-gradient(135deg,#0b6b3a,#1fa463)">Science laboratory</div><div style="background:linear-gradient(135deg,#7a5a00,#d4a017)">Inter-house sports</div><div style="background:linear-gradient(135deg,#123c69,#3a7bd5)">ICT centre</div><div style="background:linear-gradient(135deg,#5b2a86,#a267d6)">Graduation day</div></div></div>
+<div class="wrap" id="contact"><h2>Contact us</h2><div class="grid"><div class="card"><p>&#128205; Demo address, Lagos, Nigeria<br>&#128222; 0800 000 0000<br>&#9993;&#65039; info@nasfat-school.example<br>&#128339; Mon to Fri, 7:30am to 4:00pm</p></div>
+<form class="card" onsubmit="event.preventDefault();toast('Message sent (demo). We will reply soon.');this.reset()"><input required placeholder="Your name"><input required type="email" placeholder="Email"><textarea required rows="3" placeholder="Message"></textarea><button class="btn g">Send message</button></form></div></div>
+<footer style="text-align:center;padding:24px;color:var(--mu)">&copy; 2026 NASFAT Secondary School portal concept &middot; Designed &amp; built by <a href="https://cyber-syntax.netlify.app">CYBER_SYNTAX</a></footer>
+</div>
+
+<div id="login" class="login hide"><div class="lbox">
+<div style="text-align:center"><div class="crest" style="margin:auto;width:60px;height:60px;font-size:1.6rem">N</div><h2>Student Portal</h2><p style="color:var(--mu)">Sign in with your student ID</p></div>
+<form id="lf"><label>Student ID</label><input id="lu" placeholder="e.g. NSS/2023/014" autocomplete="username">
+<label>Password</label><div class="pw"><input id="lp" type="password" autocomplete="current-password"><button type="button" onclick="var p=$('#lp');p.type=p.type=='password'?'text':'password';this.textContent=p.type=='password'?'Show':'Hide'">Show</button></div>
+<div class="err" id="le"></div><button class="btn g" style="width:100%">Sign in</button></form>
+<p style="text-align:center"><a href="#" onclick="event.preventDefault();openM('<h3>Reset password</h3><p>Enter your student ID. A reset link will go to your parent or guardian email.</p><input placeholder=&quot;Student ID&quot;><button class=&quot;btn g&quot; onclick=&quot;closeM();toast(\'Reset link sent (demo)\')&quot;>Send reset link</button>')">Forgot password?</a> &middot; <a href="#" onclick="event.preventDefault();go('public')">Back to website</a></p>
+<div class="hint"><b>Demo accounts</b><br>NSS/2023/014 / Student@123 (SS2 boarder)<br>NSS/2025/102 / Welcome@1 (JSS2 day student)<br>Locks for 30 seconds after 5 wrong tries.</div>
+</div></div>
+
+<div id="app" class="hide"><div class="layout">
+<aside class="side" id="side"><div class="brand" style="padding:6px 10px 16px"><div class="crest">N</div>Student Portal</div><div id="menu"></div></aside>
+<div class="main"><div class="bar noprint"><div style="display:flex;gap:10px;align-items:center"><button id="mb" onclick="$('#side').classList.toggle('open')">&#9776;</button><b id="ttl">Dashboard</b></div>
+<div class="r"><button class="ib" onclick="document.body.classList.toggle('dark');localStorage.nssDark=document.body.classList.contains('dark')?1:''" title="Dark mode">&#127769;</button>
+<button class="ib" onclick="var n=$('#nt');n.style.display=n.style.display=='block'?'none':'block';$('#nd').classList.add('hide')">&#128276;<span class="dot" id="nd">3</span></button>
+<div class="notif" id="nt"><div>&#128176; Second instalment of school fees is due 15 Nov.</div><div>&#128221; New Mathematics assignment posted.</div><div>&#128226; Mid-term break: 30 Oct to 3 Nov.</div></div>
+<button class="ib" onclick="logout()">Log out</button></div></div>
+<div class="content" id="view"></div></div></div></div>
+<div class="modal" id="m" onclick="if(event.target==this)closeM()"><div class="mbox" id="mc"></div></div><div class="toast" id="t"></div>
+<script>
+function $(s){return document.querySelector(s)}
+function N(n){return '&#8358;'+Number(n).toLocaleString('en-NG')}
+function toast(m){var t=$('#t');t.innerHTML=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},2800)}
+function openM(h){$('#mc').innerHTML=h;$('#m').classList.add('show')}function closeM(){$('#m').classList.remove('show')}
+var DB={"NSS/2023/014":{pw:"Student@123",name:"Aisha Bello",cls:"SS2 Science A",boarder:true,dob:"12 Mar 2010",gender:"Female",parent:"Mr. Ibrahim Bello",pphone:"0803 000 0001",pemail:"bello.family@example.com",addr:"Ikeja, Lagos",
+ fees:[["Tuition",150000],["Boarding & feeding",120000],["PTA levy",10000],["Uniform & books",25000],["Exam & lab fees",15000],["ICT levy",8000]],paid:[["NSS-R-2041","05 Sep 2026","First instalment","Card",200000]],
+ subj:[["Mathematics",38,52],["English Language",35,50],["Physics",34,48],["Chemistry",32,45],["Biology",37,51],["Further Maths",30,44],["Islamic Studies",39,55],["Civic Education",36,50],["Computer Studies",40,56]],att:[19,21,20,18,22,17],q:62,juz:"Juz 28 (Al-Mujadila)"},
+"NSS/2025/102":{pw:"Welcome@1",name:"Yusuf Adebayo",cls:"JSS2 Gold",boarder:false,dob:"4 Jul 2013",gender:"Male",parent:"Mrs. Kafayat Adebayo",pphone:"0805 000 0002",pemail:"adebayo.k@example.com",addr:"Surulere, Lagos",
+ fees:[["Tuition",110000],["PTA levy",10000],["Uniform & books",30000],["Exam fees",8000],["ICT levy",8000]],paid:[["NSS-R-2077","08 Sep 2026","Full payment","Bank transfer",166000]],
+ subj:[["Mathematics",31,45],["English Language",33,47],["Basic Science",35,49],["Basic Technology",29,42],["Social Studies",36,52],["Arabic",34,50],["Islamic Studies",38,54],["Computer Studies",37,53],["Yoruba",33,46]],att:[20,22,21,20,21,19],q:35,juz:"Juz 30 (Amma)"}};
+var me,id,fails=+(sessionStorage.f||0),lockUntil=+(sessionStorage.l||0);
+function go(v){['public','login','app'].forEach(function(x){$('#'+x).classList.toggle('hide',x!=v)});scrollTo(0,0)}
+$('#lf').onsubmit=function(e){e.preventDefault();var u=$('#lu').value.trim().toUpperCase(),p=$('#lp').value,er=$('#le');
+ if(Date.now()<lockUntil){er.textContent='Too many attempts. Try again in '+Math.ceil((lockUntil-Date.now())/1000)+'s.';return}
+ var real=DB[u]&&(JSON.parse(localStorage['nss_'+u]||'{}').pw||DB[u].pw);
+ if(real&&real===p){fails=0;sessionStorage.f=0;sessionStorage.user=u;start(u);return}
+ fails++;sessionStorage.f=fails;if(fails>=5){lockUntil=Date.now()+30000;sessionStorage.l=lockUntil;fails=0;sessionStorage.f=0;er.textContent='Account locked for 30 seconds after 5 wrong tries.'}else er.textContent='Wrong student ID or password. '+(5-fails)+' tries left.'};
+function st(k){var s=JSON.parse(localStorage['nss_'+id]||'{}');return k?s[k]:s}function sv(k,v){var s=st();s[k]=v;localStorage['nss_'+id]=JSON.stringify(s)}
+function start(u){id=u;me=DB[u];go('app');buildMenu();show(location.hash.slice(2)||'dash')}
+function logout(){sessionStorage.removeItem('user');me=null;$('#lf').reset();$('#le').textContent='';go('login');toast('Logged out')}
+var M=[["dash","&#127968;","Dashboard"],["fees","&#128176;","School Fees"],["hostel","&#128719;","Accommodation"],["results","&#128202;","Results"],["timetable","&#128197;","Timetable"],["exams","&#128221;","WAEC / NECO"],["assign","&#128218;","Assignments"],["library","&#128214;","E-Library"],["attend","&#9989;","Attendance"],["islamic","&#128332;","Islamic Studies"],["profile","&#128100;","Profile"]];
+function buildMenu(){$('#menu').innerHTML=M.map(function(m){return '<a href="#/'+m[0]+'" data-v="'+m[0]+'">'+m[1]+' '+m[2]+'</a>'}).join('')+'<a href="#" onclick="event.preventDefault();logout()">&#128682; Log out</a>'}
+addEventListener('hashchange',function(){if(me)show(location.hash.slice(2)||'dash')});
+function show(v){if(!V[v])v='dash';document.querySelectorAll('#menu a').forEach(function(a){a.classList.toggle('on',a.dataset.v==v)});$('#ttl').textContent=M.filter(function(m){return m[0]==v})[0][2];$('#view').innerHTML=V[v]();$('#side').classList.remove('open');scrollTo(0,0)}
+function tot(){return me.fees.reduce(function(a,f){return a+f[1]},0)}function pays(){return me.paid.concat(st('pays')||[])}function paidSum(){return pays().reduce(function(a,p){return a+p[4]},0)}
+function avg(){var s=me.subj.reduce(function(a,x){return a+x[1]+x[2]},0);return (s/me.subj.length).toFixed(1)}
+function grade(t){return t>=75?'A1':t>=70?'B2':t>=65?'B3':t>=60?'C4':t>=55?'C5':t>=50?'C6':t>=45?'D7':t>=40?'E8':'F9'}
+function card(h,c){return '<div class="card" style="margin-bottom:16px">'+(h?'<h3>'+h+'</h3>':'')+c+'</div>'}
+var TS=["8:00","8:40","9:20","10:00","10:40","11:30","12:10"];
+var TT=[["Mon","Mathematics","English","Physics","Chemistry","Break","Biology","Computer Studies"],["Tue","English","Further Maths","Biology","Islamic Studies","Break","Physics","Civic Education"],["Wed","Chemistry","Mathematics","English","Computer Studies","Break","Further Maths","Sports"],["Thu","Physics","Biology","Mathematics","English","Break","Chemistry","Qur'an"],["Fri","Islamic Studies","Mathematics","Civic Education","Assembly","Break","Jumu'ah","-"]];
+var AS=[["a1","Mathematics","Quadratic equations: Exercise 4.3, Q1-15","2026-10-27"],["a2","English","Essay: 'The importance of discipline' (450 words)","2026-10-29"],["a3","Physics","Lab report: simple pendulum experiment","2026-11-02"],["a4","Computer Studies","Build a one-page HTML profile","2026-11-05"],["a5","Islamic Studies","Write out Surah Al-Mulk, verses 1-10 with meaning","2026-10-24"]];
+function done(){return st('done')||[]}function openAssign(){return AS.filter(function(a){return done().indexOf(a[0])<0}).length}
+var V={
+dash:function(){var bal=tot()-paidSum(),ap=Math.round(me.att.reduce(function(a,b){return a+b},0)/132*100);
+ return '<div class="card" style="display:flex;gap:16px;align-items:center;margin-bottom:16px"><div class="pic">'+me.name[0]+'</div><div><h2 style="margin:0">Assalamu alaikum, '+me.name.split(' ')[0]+' &#128075;</h2><p style="margin:4px 0;color:var(--mu)">'+id+' &middot; '+me.cls+' &middot; 2026/2027 Session, First Term &middot; '+(me.boarder||st('room')?'Boarder':'Day student')+'</p></div></div>'+
+ '<div class="stats"><div class="stat"><b>'+avg()+'%</b><span>Last term average</span></div><div class="stat"><b>'+ap+'%</b><span>Attendance</span></div><div class="stat"><b style="color:'+(bal>0?'#c0392b':'#11683a')+'">'+N(bal)+'</b><span>Fees outstanding</span></div><div class="stat"><b>'+openAssign()+'</b><span>Assignments due</span></div></div>'+
+ '<div class="grid"><div class="card"><h3>&#128226; Announcements</h3><p>&#8226; Mid-term break: 30 Oct to 3 Nov.<br>&#8226; Inter-house sports: Friday 13 Nov.<br>&#8226; PTA meeting: Saturday 7 Nov, 10am.<br>&#8226; Second fee instalment due 15 Nov.</p></div><div class="card"><h3>&#9889; Quick links</h3><p><a href="#/fees">Pay school fees</a><br><a href="#/results">View report card</a><br><a href="#/assign">See assignments</a><br><a href="#/hostel">'+(me.boarder?'Request exeat':'Apply for boarding')+'</a></p></div><div class="card"><h3>&#128197; Monday classes</h3><p>'+TT[0].slice(1).map(function(s,i){return '<small style="color:var(--mu)">'+TS[i]+'</small> '+s}).join('<br>')+'</p></div></div>'},
+fees:function(){var t=tot(),p=paidSum(),bal=t-p;
+ return card('Fee breakdown: 2026/2027 First Term','<div class="tw"><table><tr><th>Item</th><th>Amount</th></tr>'+me.fees.map(function(f){return '<tr><td>'+f[0]+'</td><td>'+N(f[1])+'</td></tr>'}).join('')+'<tr><th>Total</th><th>'+N(t)+'</th></tr></table></div>')+
+ '<div class="stats"><div class="stat"><b>'+N(t)+'</b><span>Total fees</span></div><div class="stat"><b style="color:#11683a">'+N(p)+'</b><span>Paid</span></div><div class="stat"><b style="color:'+(bal>0?'#c0392b':'#11683a')+'">'+N(bal)+'</b><span>Balance</span></div></div>'+
+ (bal>0?card('Make a payment','<label>Amount (&#8358;)</label><input id="amt" type="number" min="1000" max="'+bal+'" value="'+bal+'"><label>Method</label><select id="pm"><option>Card</option><option>Bank transfer</option><option>USSD</option></select><button class="btn g" onclick="pay()">Pay now (demo)</button><p style="color:var(--mu);font-size:.85rem">A real portal would use Paystack or Remita here. No money is charged in this demo.</p>'):card('','<span class="badge ok">Fully paid</span> All first-term fees are cleared. Thank you!'))+
+ card('Payment history','<div class="tw"><table><tr><th>Receipt</th><th>Date</th><th>Description</th><th>Method</th><th>Amount</th><th></th></tr>'+pays().map(function(r,i){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+N(r[4])+'</td><td><button class="btn o" onclick="receipt('+i+')">Receipt</button></td></tr>'}).join('')+'</table></div>')},
+hostel:function(){var r=st('room');if(!me.boarder&&!r)return card('Boarding application','<p>You are a day student. Pick a free bed space to apply for boarding.</p>'+roomPicker());
+ r=r||'Fatimah House, Room B12';var ex=st('exeat')||[];
+ return '<div class="stats"><div class="stat"><b>'+r.split(',')[0]+'</b><span>Hostel</span></div><div class="stat"><b>'+(r.split(',')[1]||'')+'</b><span>Room</span></div><div class="stat"><b>Bed 3</b><span>Bed space</span></div><div class="stat"><b>Mrs. Lawal</b><span>House mistress</span></div></div>'+
+ card('Request an exeat (leave pass)','<label>Reason</label><select id="er"><option>Mid-term break</option><option>Medical appointment</option><option>Family event</option></select><label>Leaving</label><input id="ed1" type="date"><label>Returning</label><input id="ed2" type="date"><button class="btn g" onclick="exeat()">Submit request</button>')+
+ card('My exeat requests',ex.length?'<div class="tw"><table><tr><th>Reason</th><th>From</th><th>To</th><th>Status</th></tr>'+ex.map(function(e){return '<tr><td>'+e[0]+'</td><td>'+e[1]+'</td><td>'+e[2]+'</td><td><span class="badge pe">Awaiting parent and house mistress</span></td></tr>'}).join('')+'</table></div>':'<p style="color:var(--mu)">No requests yet.</p>')+
+ card('Hostel rules','<p>&#8226; Lights out at 10:00pm; wake-up for Subh prayer at 5:00am.<br>&#8226; No phones or electrical cooking appliances in rooms.<br>&#8226; Visiting days: first and third Saturdays, 10am to 2pm.<br>&#8226; Leaving the school needs an approved exeat.<br>&#8226; Keep your room and locker clean for weekly inspection.</p>')},
+results:function(){var t=me.subj.map(function(s){return s[1]+s[2]});
+ return '<div class="noprint" style="margin-bottom:14px"><select id="term" style="max-width:260px;display:inline-block" onchange="toast(\'Showing \'+this.value+\' (demo uses the same scores)\')"><option>2025/2026 Third Term</option><option>2025/2026 Second Term</option><option>2025/2026 First Term</option></select> <button class="btn g" onclick="print()">Print report card</button></div>'+
+ card('Report card: '+me.name+' ('+me.cls+')','<p style="color:var(--mu)">'+id+' &middot; 2025/2026 Third Term &middot; Position: <b>4th</b> of 38 &middot; Average: <b>'+avg()+'%</b></p><div class="tw"><table><tr><th>Subject</th><th>CA (40)</th><th>Exam (60)</th><th>Total</th><th>Grade</th><th>Remark</th></tr>'+me.subj.map(function(s,i){var g=grade(t[i]);return '<tr><td>'+s[0]+'</td><td>'+s[1]+'</td><td>'+s[2]+'</td><td><b>'+t[i]+'</b></td><td>'+g+'</td><td>'+(g[0]=='A'?'Excellent':g[0]=='B'?'Very good':'Good')+'</td></tr>'}).join('')+'</table></div><p><b>Form teacher:</b> A focused and respectful student. Keep it up.<br><b>Principal:</b> Promoted. Excellent result, maa sha Allah.</p>')},
+timetable:function(){return card('Class timetable: '+me.cls,'<div class="tw"><table><tr><th>Day</th>'+TS.map(function(s){return '<th>'+s+'</th>'}).join('')+'</tr>'+TT.map(function(r){return '<tr><td><b>'+r[0]+'</b></td>'+r.slice(1).map(function(c){return '<td'+(c=='Break'?' style="color:var(--mu)"':'')+'>'+c+'</td>'}).join('')+'</tr>'}).join('')+'</table></div>')},
+exams:function(){var ss3=me.cls.indexOf('SS')==0,reg=st('waec');
+ return card('WAEC / NECO information','<p>&#8226; WAEC SSCE (school candidates): May/June 2027. Registration closes <b>30 Nov 2026</b>.<br>&#8226; NECO SSCE: June/July 2027.<br>&#8226; JAMB UTME registration usually opens in January.<br>&#8226; BECE (JSS3): June 2027.<br>&#8226; Bring your birth certificate and a passport photo to the exams office for biometrics.</p>')+
+ card('Exam registration',!ss3?'<p>Exam registration opens in JSS3 (BECE) and SS2/SS3 (WAEC/NECO). The form will appear here then.</p>':reg?'<span class="badge ok">Registered</span> Subjects: '+reg.join(', '):'<p>Choose 8 or 9 subjects for WAEC 2027 (pre-registration):</p><div id="sb">'+me.subj.map(function(s){return '<label style="display:block"><input type="checkbox" style="width:auto;margin:6px 8px 6px 0" value="'+s[0]+'" checked>'+s[0]+'</label>'}).join('')+'</div><button class="btn g" onclick="regW()">Submit registration</button>')},
+assign:function(){var d=done();return card('Assignments','<div class="tw"><table><tr><th>Subject</th><th>Task</th><th>Due</th><th>Status</th><th></th></tr>'+AS.map(function(a){var ok=d.indexOf(a[0])>=0,late=!ok&&new Date(a[3]+'T23:59')<new Date();return '<tr><td>'+a[1]+'</td><td>'+a[2]+'</td><td>'+new Date(a[3]).toDateString().slice(4)+'</td><td><span class="badge '+(ok?'ok">Submitted':late?'no">Overdue':'pe">Pending')+'</span></td><td>'+(ok?'':'<button class="btn o" onclick="submitA(\''+a[0]+'\')">Submit</button>')+'</td></tr>'}).join('')+'</table></div>')},
+library:function(){var B=[["Mathematics","New General Mathematics: Chapter 4 notes"],["English","Summary writing guide"],["Physics","Motion and forces revision notes"],["Chemistry","Periodic table cheat sheet"],["Biology","Cell structure diagrams"],["Islamic Studies","40 Hadith of Imam Nawawi"],["Computer Studies","HTML and CSS beginners guide"],["Civic Education","Nigerian constitution summary"]];
+ return '<input placeholder="Search notes..." oninput="var q=this.value.toLowerCase();document.querySelectorAll(\'.bk\').forEach(function(b){b.classList.toggle(\'hide\',b.textContent.toLowerCase().indexOf(q)<0)})"><div class="grid">'+B.map(function(b){return '<div class="card bk"><small style="color:var(--g2)">'+b[0]+'</small><h3 style="font-size:1rem">&#128196; '+b[1]+'</h3><button class="btn o" onclick="dl(\''+b[1]+'\')">Download</button></div>'}).join('')+'</div>'},
+attend:function(){var mo=["Sep","Oct","Nov","Dec","Jan","Feb"],sum=me.att.reduce(function(a,b){return a+b},0);
+ return '<div class="stats"><div class="stat"><b>'+sum+'/132</b><span>Days present</span></div><div class="stat"><b>'+Math.round(sum/132*100)+'%</b><span>Attendance rate</span></div><div class="stat"><b>'+(132-sum)+'</b><span>Days absent</span></div></div>'+card('Monthly attendance, last session (out of 22 school days)','<div class="bars">'+me.att.map(function(a,i){return '<div style="height:'+(a/22*100)+'%"><em>'+a+'</em><span>'+mo[i]+'</span></div>'}).join('')+'</div>')},
+islamic:function(){var q=st('q')||me.q;return card('Qur\'an memorisation (Hifz)','<p>Current: <b>'+me.juz+'</b></p><p>Progress through the school Hifz plan: <b>'+q+'%</b></p><div class="prog"><i style="width:'+q+'%"></i></div><button class="btn g" onclick="sv(\'q\',Math.min(100,(st(\'q\')||me.q)+2));show(\'islamic\');toast(\'Revision recorded. Maa sha Allah!\')">Mark today\'s revision done</button>')+
+ card('Weekly schedule','<div class="tw"><table><tr><th>Activity</th><th>Day</th><th>Time</th></tr><tr><td>Morning assembly and adhkar</td><td>Mon to Fri</td><td>7:30am</td></tr><tr><td>Qur\'an class</td><td>Thursday</td><td>12:10pm</td></tr><tr><td>Jumu\'ah prayer</td><td>Friday</td><td>1:15pm</td></tr><tr><td>Tafsir circle (boarders)</td><td>Saturday</td><td>5:00pm</td></tr></table></div>')+card('Moral focus this week','<p>&ldquo;The best among you are those who have the best character.&rdquo; (Bukhari)</p>')},
+profile:function(){var rows=[["Full name",me.name],["Student ID",id],["Class",me.cls],["Date of birth",me.dob],["Gender",me.gender],["Address",me.addr],["Parent/guardian",me.parent],["Parent phone",st('pphone')||me.pphone],["Parent email",me.pemail]];
+ return card('My profile','<div style="display:flex;gap:16px;align-items:center;margin-bottom:12px"><div class="pic">'+me.name[0]+'</div><b>'+me.name+'</b></div><div class="tw"><table>'+rows.map(function(r){return '<tr><th>'+r[0]+'</th><td>'+r[1]+'</td></tr>'}).join('')+'</table></div><br><label>Update parent phone</label><input id="pp" value="'+(st('pphone')||me.pphone)+'"><button class="btn o" onclick="sv(\'pphone\',$(\'#pp\').value);show(\'profile\');toast(\'Phone updated\')">Save</button>')+
+ card('Change password','<input id="o" type="password" placeholder="Current password"><input id="n1" type="password" placeholder="New password (8+ chars, a number and a symbol)"><input id="n2" type="password" placeholder="Confirm new password"><button class="btn g" onclick="chpw()">Change password</button>')}
+};
+function pay(){var a=+$('#amt').value,bal=tot()-paidSum(),m=$('#pm').value;if(!a||a<1000||a>bal){toast('Enter an amount between &#8358;1,000 and '+N(bal));return}
+ openM('<h3>Confirm payment</h3><p>Amount: <b>'+N(a)+'</b><br>Method: '+m+'</p><p style="font-size:.85rem;color:var(--mu)">Demo checkout. No money is charged.</p><button class="btn g" onclick="doPay('+a+',\''+m+'\')">Pay '+N(a)+'</button> <button class="btn o" onclick="closeM()">Cancel</button>')}
+function doPay(a,m){var p=st('pays')||[];p.push(['NSS-R-'+(3000+Math.floor(Math.random()*6999)),new Date().toDateString().slice(4),'Online payment',m,a]);sv('pays',p);closeM();show('fees');toast('Payment successful (demo). Receipt ready.')}
+function receipt(i){var r=pays()[i];openM('<div id="rc"><div style="text-align:center"><div class="crest" style="margin:auto">N</div><h3>NASFAT Secondary School</h3><p>Payment Receipt (demo)</p></div><table><tr><th>Receipt no.</th><td>'+r[0]+'</td></tr><tr><th>Student</th><td>'+me.name+' ('+id+')</td></tr><tr><th>Class</th><td>'+me.cls+'</td></tr><tr><th>Date</th><td>'+r[1]+'</td></tr><tr><th>For</th><td>'+r[2]+'</td></tr><tr><th>Method</th><td>'+r[3]+'</td></tr><tr><th>Amount</th><td><b>'+N(r[4])+'</b></td></tr></table></div><br><button class="btn g" onclick="var w=open(\'\');w.document.write(\'<body style=font-family:sans-serif>\'+$(\'#rc\').innerHTML+\'</body>\');w.document.close();w.print()">Print</button> <button class="btn o" onclick="closeM()">Close</button>')}
+function roomPicker(){var h=me.gender=='Male'?'Umar House':'Fatimah House',full=[2,5,6,9];return '<p>Hostel: <b>'+h+'</b> (crossed-out rooms are full)</p><div>'+[1,2,3,4,5,6,7,8,9,10,11,12].map(function(n){var f=full.indexOf(n)>=0;return '<button class="room'+(f?' full':'')+'" '+(f?'disabled':'onclick="pick(this,'+n+')"')+'>B'+n+'</button>'}).join('')+'</div><br><button class="btn g" onclick="book(\''+h+'\')">Book bed space</button>'}
+function pick(el,n){document.querySelectorAll('.room').forEach(function(x){x.classList.remove('sel')});el.classList.add('sel');window._rm=n}
+function book(h){if(!window._rm){toast('Pick a free room first');return}sv('room',h+', Room B'+window._rm);show('hostel');toast('Bed space booked (demo)')}
+function exeat(){var a=$('#ed1').value,b=$('#ed2').value;if(!a||!b||b<a){toast('Pick valid leaving and return dates');return}var e=st('exeat')||[];e.push([$('#er').value,a,b]);sv('exeat',e);show('hostel');toast('Exeat request sent for approval')}
+function regW(){var s=[].slice.call(document.querySelectorAll('#sb input:checked')).map(function(x){return x.value});if(s.length<8||s.length>9){toast('Choose 8 or 9 subjects');return}sv('waec',s);show('exams');toast('Registration submitted')}
+function submitA(k){openM('<h3>Submit assignment</h3><input type="file"><textarea rows="3" placeholder="Note to teacher (optional)"></textarea><button class="btn g" onclick="markA(\''+k+'\')">Submit</button> <button class="btn o" onclick="closeM()">Cancel</button>')}
+function markA(k){var d=done();d.push(k);sv('done',d);closeM();show('assign');toast('Assignment submitted')}
+function dl(n){var b=new Blob(['NASFAT Secondary School E-Library (demo)\n\n'+n+'\n\nSample notes file.'],{type:'text/plain'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n.replace(/[^a-z0-9]+/gi,'-')+'.txt';a.click();toast('Downloading '+n)}
+function chpw(){var o=$('#o').value,a=$('#n1').value,b=$('#n2').value,cur=st('pw')||me.pw;
+ if(o!==cur){toast('Current password is wrong');return}if(a.length<8||!/\d/.test(a)||!/[^A-Za-z0-9]/.test(a)){toast('New password needs 8+ characters, a number and a symbol');return}if(a!==b){toast('Passwords do not match');return}
+ sv('pw',a);toast('Password changed. Use it next time you sign in.');show('profile')}
+if(localStorage.nssDark)document.body.classList.add('dark');
+if(sessionStorage.user&&DB[sessionStorage.user])start(sessionStorage.user);
+</script></body></html>

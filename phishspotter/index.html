@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PhishSpotter | Spot the phishing email</title>
+<style>*{box-sizing:border-box;margin:0}body{font-family:system-ui,sans-serif;background:#05060f;color:#e5e7eb;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px}
+h1{font-size:2rem;background:linear-gradient(90deg,#06b6d4,#7c3aed,#f472b6);-webkit-background-clip:text;color:transparent;margin:10px 0}
+.box{max-width:640px;width:100%;background:#0f1223;border:1px solid #334155;border-radius:18px;padding:22px;margin-top:14px}
+.mail{background:#fff;color:#111;border-radius:12px;padding:16px;font-size:.95rem;line-height:1.5}.mail .h{border-bottom:1px solid #ddd;padding-bottom:8px;margin-bottom:8px;font-size:.85rem;color:#444}
+.btns{display:flex;gap:12px;margin-top:16px}button{flex:1;padding:14px;border:0;border-radius:999px;font-weight:700;font-size:1rem;cursor:pointer;color:#fff}
+.p{background:#dc2626}.l{background:#059669}.n{background:linear-gradient(90deg,#7c3aed,#06b6d4)}#fb{margin-top:14px;line-height:1.6}.bar{height:8px;background:#1e293b;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:#06b6d4;transition:.3s}
+p{color:#94a3b8}a{color:#06b6d4}</style></head><body>
+<h1>PhishSpotter 🎣</h1><p>Can you tell a scam email from a real one? 8 rounds.</p>
+<div class="box"><div class="bar"><i id="bar"></i></div><p id="st" style="margin:10px 0"></p><div class="mail" id="mail"></div>
+<div class="btns" id="btns"><button class="p" onclick="ans(1)">🚩 Phishing</button><button class="l" onclick="ans(0)">✅ Legit</button></div><div id="fb"></div></div>
+<p style="margin-top:20px">Built by <a href="https://cyber-syntax.netlify.app">CYBER_SYNTAX</a></p>
+<script>
+var Q=[
+["GTBank Alerts &lt;alert@gtbank-secure-verify.com&gt;","URGENT: Account suspended","Dear customer, your account will be blocked in 24 hours. Click http://gtbank-verify.xyz to confirm your BVN and PIN.",1,"Fake domain, urgency, and a request for your PIN. Real banks never ask for your PIN."],
+["GitHub &lt;noreply@github.com&gt;","[GitHub] A new SSH key was added","A new public key was added to your account. If you didn't do this, review your keys at github.com/settings/keys.",0,"Real sender domain, no attachment, and it points you to the official site without asking for a password."],
+["Netflix &lt;billing@netf1ix-support.com&gt;","Payment failed","We couldn't process your payment. Update your card within 12 hours here: bit.ly/nflx-pay",1,"'netf1ix' uses the number 1 instead of an L, and the link is hidden behind a shortener."],
+["JAMB Office &lt;jambregistration2026@gmail.com&gt;","You have won scholarship ₦500,000","Congratulations! Send ₦5,000 processing fee to claim your scholarship.",1,"Official bodies don't use Gmail, and you never pay a fee to receive a prize."],
+["Google &lt;no-reply@accounts.google.com&gt;","Security alert","New sign-in on Windows. If this was you, you don't need to do anything. Otherwise check activity at myaccount.google.com.",0,"Correct domain, no link to type a password into, and no pressure."],
+["IT Department &lt;it-helpdesk@futa-edu.support&gt;","Mailbox full","Your student mailbox is 99% full. Log in with your password at futa-mail-upgrade.com to avoid losing emails.",1,"The domain is not futa.edu.ng, and it asks for your password on an outside site."],
+["Amazon &lt;order-update@amazon.com&gt;","Your order has shipped","Your order #112-4839 is on its way. Track it in Your Orders on amazon.com.",0,"Correct domain, specific details, and it sends you to the app, not to a strange link."],
+["CEO (Mr. Bello) &lt;bello.ceo@outlook.com&gt;","Quick favour","I'm in a meeting. Buy 4 iTunes gift cards of $100 and send me the codes now. Keep this private.",1,"Gift card requests, secrecy and a personal email address are classic CEO-fraud signs."]],i=0,s=0;
+function show(){var q=Q[i];document.getElementById("st").textContent="Round "+(i+1)+" of "+Q.length+" · Score "+s;document.getElementById("bar").style.width=(i/Q.length*100)+"%";
+document.getElementById("mail").innerHTML='<div class="h"><b>From:</b> '+q[0]+'<br><b>Subject:</b> '+q[1]+'</div>'+q[2];document.getElementById("fb").innerHTML="";document.getElementById("btns").style.display="flex"}
+function ans(a){var q=Q[i],ok=a===q[3];if(ok)s++;document.getElementById("btns").style.display="none";
+document.getElementById("fb").innerHTML=(ok?"<b style='color:#34d399'>✔ Correct!</b> ":"<b style='color:#f87171'>✘ Not quite.</b> ")+"This one is "+(q[3]?"phishing":"legit")+". "+q[4]+'<button class="n" style="width:100%;margin-top:12px" onclick="nx()">'+(i<Q.length-1?"Next email →":"See my score")+'</button>'}
+function nx(){i++;if(i<Q.length)return show();document.getElementById("bar").style.width="100%";var r=s>=7?"Phish-proof expert 🛡️":s>=5?"Pretty sharp 👀":"Keep practising 🎣";
+document.getElementById("st").textContent="Final score: "+s+" / "+Q.length+" · "+r;document.getElementById("mail").innerHTML="<b>Top 3 rules:</b><br>1. Check the sender's real domain.<br>2. Be suspicious of urgency, prizes and fees.<br>3. Never type passwords or PINs from an email link.";
+document.getElementById("fb").innerHTML='<button class="n" style="width:100%" onclick="i=0;s=0;show()">Play again</button>'}
+show();
+</script></body></html>

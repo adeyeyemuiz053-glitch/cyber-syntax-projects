@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | CYBER_SYNTAX</title><meta name="description" content="CYBER_SYNTAX by Muiz: web developer, creative designer and incoming full stack developer.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#05060f;--c1:#7c3aed;--c2:#06b6d4;--c3:#f472b6;--m:#94a3b8}
+html{scroll-behavior:smooth}body{background:var(--bg);color:#e5e7eb;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+#bg{position:fixed;inset:0;z-index:0}
+header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:16px 6vw;background:rgba(5,6,15,.6);backdrop-filter:blur(10px)}
+.logo{font-weight:800;font-size:1.3rem;background:linear-gradient(90deg,var(--c2),var(--c1),var(--c3));-webkit-background-clip:text;color:transparent}
+nav a{color:var(--m);text-decoration:none;margin-left:20px}nav a:hover{color:#fff}
+.stage{position:fixed;inset:0;z-index:1;display:flex;align-items:center;justify-content:flex-end;padding-right:8vw;perspective:1400px;pointer-events:none}
+.scene{position:relative;width:420px;height:320px;transform-style:preserve-3d;transition:transform .15s linear}
+.laptop{position:absolute;left:0;top:30px;width:360px;transform-style:preserve-3d;animation:fl 6s ease-in-out infinite}
+.lid{position:relative;width:360px;height:225px;background:#111827;border:10px solid #1f2937;border-radius:14px 14px 4px 4px;transform-origin:bottom;transform:rotateX(-8deg);overflow:hidden;box-shadow:0 0 60px rgba(124,58,237,.45)}
+.base{width:400px;height:240px;margin-left:-20px;background:linear-gradient(#374151,#1f2937);border-radius:8px;transform-origin:top;transform:rotateX(82deg)}
+.phone{position:absolute;right:-10px;top:70px;width:120px;height:240px;border:7px solid #1f2937;border-radius:22px;overflow:hidden;transform:translateZ(90px) rotateY(-18deg);box-shadow:0 0 50px rgba(6,182,212,.45);animation:fl 5s ease-in-out infinite reverse}
+.screen{position:absolute;inset:0;transition:opacity .6s}.off{opacity:0}
+.sa{background:radial-gradient(circle at 30% 30%,#7c3aed,#05060f 70%);display:grid;place-items:center;font-size:2.2rem;font-weight:800}
+.sb{background:linear-gradient(135deg,#0f172a,#1e1b4b);display:grid;place-items:center}
+.hp{width:90px;height:90px;border:10px solid var(--c2);border-bottom:none;border-radius:90px 90px 0 0;position:relative;animation:spin 4s linear infinite}
+.hp:before,.hp:after{content:"";position:absolute;bottom:-30px;width:28px;height:40px;background:var(--c3);border-radius:10px}.hp:before{left:-18px}.hp:after{right:-18px}
+.sc{background:#0b1222;padding:12px;font:11px/1.6 monospace;color:#86efac;white-space:pre}
+.sd{background:linear-gradient(135deg,#06b6d4,#7c3aed);display:grid;place-items:center;font-weight:800;font-size:1.2rem;text-align:center}
+@keyframes fl{50%{translate:0 -14px}}@keyframes spin{to{transform:rotateY(360deg)}}
+main{position:relative;z-index:5}
+section{min-height:100vh;display:flex;align-items:center;padding:110px 6vw 60px}
+.card{max-width:560px;background:rgba(15,18,35,.75);border:1px solid rgba(124,58,237,.35);backdrop-filter:blur(12px);border-radius:22px;padding:34px;box-shadow:0 20px 60px rgba(0,0,0,.5);opacity:0;transform:translateY(40px);transition:.8s}
+.card.in{opacity:1;transform:none}
+h1{font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.05;background:linear-gradient(90deg,#fff,var(--c2),var(--c3));-webkit-background-clip:text;color:transparent}
+h2{font-size:2rem;margin-bottom:10px}h2 span{color:var(--c2)}
+p{color:var(--m);line-height:1.7;margin-top:10px}
+.tag{color:var(--c2);font-weight:600;letter-spacing:.15em;font-size:.8rem;text-transform:uppercase}
+.btn{display:inline-block;margin-top:22px;padding:13px 26px;border-radius:999px;background:linear-gradient(90deg,var(--c1),var(--c2));color:#fff;text-decoration:none;font-weight:700;border:0;cursor:pointer;font-size:1rem;transition:.25s}.btn:hover{transform:translateY(-3px)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.chips span{padding:8px 14px;border-radius:999px;background:rgba(124,58,237,.18);border:1px solid rgba(124,58,237,.4);font-size:.9rem}
+.proj{margin-top:14px;padding:18px;border-radius:16px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.3)}.proj h3{color:#fff}.proj a,footer a{color:var(--c2)}
+form{display:grid;gap:10px;margin-top:14px}input,textarea{padding:12px 14px;border-radius:12px;border:1px solid #334155;background:#0b1020;color:#fff;font:inherit}
+.trap{display:none}
+footer{position:relative;z-index:5;text-align:center;padding:30px;color:var(--m)}
+#botBtn{position:fixed;left:18px;bottom:18px;z-index:30;padding:12px 18px;border-radius:999px;border:0;background:linear-gradient(90deg,var(--c3),var(--c1));color:#fff;font-weight:700;cursor:pointer}
+#bot{position:fixed;left:18px;bottom:74px;z-index:30;width:300px;max-width:calc(100vw - 36px);background:#0f1223;border:1px solid #334155;border-radius:16px;display:none;flex-direction:column;overflow:hidden}
+#bot.open{display:flex}#log{height:240px;overflow:auto;padding:12px;font-size:.9rem}#log div{margin:6px 0;padding:8px 11px;border-radius:12px;max-width:85%}.u{background:var(--c1);margin-left:auto}.b{background:#1e293b}
+#bot form{display:flex;margin:0;gap:0;border-top:1px solid #334155}#bot input{flex:1;border:0;border-radius:0}#bot button{border:0;background:var(--c2);color:#fff;padding:0 14px}
+@media(max-width:860px){.stage{justify-content:center;padding:90px 0 0;align-items:flex-start;opacity:.35}.scene{scale:.7}nav a{margin-left:12px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+nav a.act{color:#fff;border-bottom:2px solid var(--c2)}
+.page{min-height:auto;padding:120px 6vw 50px;display:block}.wrap{max-width:1100px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:24px}
+.tile{background:rgba(15,18,35,.82);border:1px solid rgba(124,58,237,.35);border-radius:20px;padding:26px;transition:.3s}
+.tile:hover{transform:translateY(-6px);border-color:var(--c2);box-shadow:0 0 40px rgba(6,182,212,.25)}.tile h3{color:#fff;margin:8px 0}.ico{font-size:2rem}
+.price{color:var(--c3);font-weight:700;margin-top:10px}.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.filters button{padding:9px 16px;border-radius:999px;border:1px solid #334155;background:#0b1020;color:#e5e7eb;cursor:pointer;font:inherit}
+.filters button.on{background:linear-gradient(90deg,var(--c1),var(--c2));border-color:transparent}.hide{display:none!important}
+.stats{display:flex;gap:30px;flex-wrap:wrap;margin-top:20px}.stats b{font-size:2rem;color:var(--c2);display:block}
+details{background:rgba(15,18,35,.82);border:1px solid #334155;border-radius:14px;padding:16px;margin-top:10px}summary{cursor:pointer;font-weight:600}
+code{background:#0b1222;color:#86efac;padding:2px 6px;border-radius:6px}select{padding:12px 14px;border-radius:12px;border:1px solid #334155;background:#0b1020;color:#fff;font:inherit}
+.tl{border-left:2px solid var(--c1);margin-top:20px;padding-left:22px}.tl div{margin-bottom:22px;position:relative}.tl div:before{content:"";position:absolute;left:-30px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--c2)}
+.post{display:none}.post.show{display:block}#menu{display:none;background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer}
+@media(max-width:860px){#menu{display:block}nav{display:none;position:absolute;top:100%;left:0;right:0;background:#05060f;flex-direction:column;padding:10px 6vw}nav.open{display:flex}nav a{margin:10px 0}}
+</style></head><body><canvas id="bg"></canvas>
+<header><a class="logo" href="/" style="text-decoration:none">CYBER_SYNTAX</a><button id="menu" aria-label="Menu">&#9776;</button><nav id="nav"><a href="/">Home</a><a href="/about/" class="act">About</a><a href="/projects/">Projects</a><a href="/services/">Services</a><a href="/blog/">Blog</a><a href="/contact/">Contact</a></nav></header>
+<main><section class="page"><div class="wrap"><div class="card" style="max-width:none"><span class="tag">About</span><h2>Code meets <span>creativity</span></h2><p>I'm Adeyeye Muiz Adesoji, a developer and designer from Nigeria and a Cybersecurity student at FUTA. I believe a website should look beautiful, work flawlessly and protect the people who use it. That mix of design, development and security is what CYBER_SYNTAX stands for.</p><div class="chips"><span>HTML</span><span>CSS 3D</span><span>JavaScript</span><span>Scroll animation</span><span>Responsive design</span><span>UI/UX design</span><span>Node.js (learning)</span><span>Databases (learning)</span><span>Cybersecurity</span><span>Networking</span></div></div>
+<h2 style="margin-top:40px">My <span>journey</span></h2><div class="tl"><div><h3>Started</h3><p>Fell in love with building for the web: HTML, CSS and JavaScript.</p></div><div><h3>Cybersecurity at FUTA</h3><p>Learning how systems are attacked and protected, so every site I build is safer.</p></div><div><h3>Now</h3><p>Web developer and creative designer: 3D interfaces, animation and responsive sites.</p></div><div><h3>Next</h3><p>Back end with Node.js, APIs and databases, to become a full stack developer.</p></div><div><h3>Mission</h3><p>Help businesses and creators in Africa and beyond get online with products that are beautiful, useful and secure.</p></div></div><a class="btn" href="/contact/">Work with me &rarr;</a></div></section></main>
+<footer>&copy; <span id="yr"></span> CYBER_SYNTAX &middot; Made by Muiz &amp; CyberSyntax &middot; <a href="mailto:adeyeyemuiz053@gmail.com">adeyeyemuiz053@gmail.com</a> &middot; <a href="https://x.com/AdeyeyeMAK" target="_blank" rel="noopener">@AdeyeyeMAK</a></footer>
+<button id="botBtn">Ask me &#128172;</button>
+<div id="bot"><div id="log"><div class="b">Hi! Ask me about Muiz, his services, skills or how to hire him.</div></div><script>
+var EMAIL="adeyeyemuiz053@gmail.com";
+document.getElementById("yr").textContent=new Date().getFullYear();
+var c=document.getElementById("bg"),x=c.getContext("2d"),P=[];
+function rs(){c.width=innerWidth;c.height=innerHeight}rs();addEventListener("resize",rs);
+for(var i=0;i<90;i++)P.push({x:Math.random(),y:Math.random(),z:Math.random()*.8+.2});
+function draw(){x.clearRect(0,0,c.width,c.height);var o=scrollY*.0004;P.forEach(function(p){var y=((p.y-o*p.z)%1+1)%1;x.fillStyle="rgba("+(p.z>.6?"6,182,212":"124,58,237")+","+p.z+")";x.beginPath();x.arc(p.x*c.width,y*c.height,p.z*2.2,0,7);x.fill()});requestAnimationFrame(draw)}draw();
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("in")})},{threshold:.1});document.querySelectorAll(".card").forEach(function(e){io.observe(e)});var cf=document.getElementById("cf");if(cf)cf.addEventListener("submit",function(e){e.preventDefault();var f=e.target,fb=document.getElementById("fb");
+if(f._honey.value)return;fb.textContent="Sending...";
+fetch("https://formsubmit.co/ajax/"+EMAIL,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({name:f.name.value,email:f.email.value,message:f.message.value,_subject:"New message from CYBER_SYNTAX"})})
+.then(function(r){if(!r.ok)throw 0;fb.textContent="Thanks! Your message was sent. Muiz will reply soon.";f.reset()}).catch(function(){fb.textContent="Sorry, it didn't send. Please email "+EMAIL})});
+
+document.getElementById("menu").onclick=function(){document.getElementById("nav").classList.toggle("open")};
+var FAQ=[[["who","muiz","about","you"],"Muiz (Adeyeye Muiz Adesoji), aka CYBER_SYNTAX, is a web developer, creative designer and incoming full stack developer, and a Cybersecurity student at FUTA."],
+[["skill","stack","know","tech"],"HTML, CSS 3D, JavaScript, scroll animation, responsive design, plus cybersecurity and networking basics."],
+[["work","service","offer","do"],"He offers web development, creative design and security-first builds. He is now learning back end to become a full stack developer."],
+[["hire","price","cost","website","build","available"],"Yes, Muiz takes on web development and design projects. Use the Contact page and describe what you need."],
+[["contact","email","reach","x","twitter"],"Email adeyeyemuiz053@gmail.com, use the contact form, or find him on X at @AdeyeyeMAK."],
+[["school","futa","study","university"],"He studies Cybersecurity at the Federal University of Technology, Akure (FUTA)."],
+[["hi","hello","hey"],"Hello! What would you like to know about Muiz?"]];
+var bot=document.getElementById("bot"),log=document.getElementById("log");
+document.getElementById("botBtn").onclick=function(){bot.classList.toggle("open")};
+function add(t,cl){var d=document.createElement("div");d.className=cl;d.textContent=t;log.appendChild(d);log.scrollTop=1e6}
+document.getElementById("bf").addEventListener("submit",function(e){e.preventDefault();var i=document.getElementById("bi"),q=i.value.trim().toLowerCase();if(!q)return;add(i.value,"u");i.value="";
+var a="I'm not sure about that. Try asking about his skills, work, or how to contact him.";for(var j=0;j<FAQ.length;j++){if(FAQ[j][0].some(function(w){return new RegExp("\\b"+w).test(q)})){a=FAQ[j][1];break}}setTimeout(function(){add(a,"b")},300)});
+</script></body></html>

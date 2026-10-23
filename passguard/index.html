@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PassGuard — Password Strength Checker | CYBER_SYNTAX</title>
+<meta name="description" content="Check how strong your password is, privately in your browser, with live security tips.">
+<style>
+:root{--bg:#070b14;--card:#0f1626;--t:#e6edf7;--m:#8a97ad;--c1:#00e5ff;--c2:#ff2fd1;--ok:#22c55e;--bad:#ef4444;--mid:#f59e0b}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 20% 0,#0b2a3a,transparent 50%),radial-gradient(circle at 90% 100%,#2a0b2f,transparent 50%),var(--bg);color:var(--t);min-height:100vh}
+.bar{background:linear-gradient(90deg,var(--c1),var(--c2));color:#000;text-align:center;font-size:13px;padding:6px}.bar a{color:#000;font-weight:700}
+main{max-width:720px;margin:auto;padding:32px 18px}h1{font-size:clamp(28px,6vw,44px);margin:.2em 0}h1 span{background:linear-gradient(90deg,var(--c1),var(--c2));-webkit-background-clip:text;color:transparent}
+p.l{color:var(--m)}.card{background:var(--card);border:1px solid #1e2a40;border-radius:16px;padding:22px;margin:18px 0}
+.in{display:flex;gap:8px}input{flex:1;padding:14px;border-radius:10px;border:1px solid #2a3a58;background:#0a101d;color:var(--t);font-size:17px}
+button{padding:12px 16px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--c1),var(--c2));color:#000;font-weight:700;cursor:pointer}
+.meter{height:12px;background:#1a2438;border-radius:9px;margin:16px 0 8px;overflow:hidden}.fill{height:100%;width:0;transition:.3s}
+.row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}.big{font-size:22px;font-weight:800}
+ul{list-style:none;padding:0;margin:0}li{padding:7px 0;border-bottom:1px solid #18223a}li:before{content:"✗ ";color:var(--bad)}li.y:before{content:"✓ ";color:var(--ok)}
+.tips li:before{content:"💡 "}.priv{font-size:13px;color:var(--m)}footer{text-align:center;color:var(--m);padding:24px;font-size:14px}footer a{color:var(--c1)}
+</style></head><body>
+<div class="bar">Demo project built by <a href="https://cyber-syntax.netlify.app">CYBER_SYNTAX</a></div>
+<main><h1>Pass<span>Guard</span> 🔐</h1><p class="l">How strong is your password? Type it below to get a score, a crack-time estimate and tips to make it safer.</p>
+<div class="card"><div class="in"><input id="pw" type="password" placeholder="Type a password…" autocomplete="off" aria-label="Password"><button id="tg" type="button">Show</button></div>
+<div class="meter"><div class="fill" id="fill"></div></div>
+<div class="row"><div class="big" id="lvl">—</div><div>Time to crack: <b id="ct">—</b></div></div>
+<p class="priv">🛡️ Private: everything runs in your browser. Your password is never sent or saved.</p></div>
+<div class="card"><h3>Checklist</h3><ul id="ck"></ul></div>
+<div class="card"><h3>Live tips</h3><ul class="tips" id="tips"><li>Start typing to see tips.</li></ul></div>
+<div class="card"><h3>Need a strong one?</h3><p class="l">Generate a random passphrase that's easy to remember and hard to guess.</p><button id="gen" type="button">Generate passphrase</button> <code id="pp" style="display:block;margin-top:12px;font-size:17px;color:var(--c1)"></code></div>
+</main><footer>Built by <a href="https://cyber-syntax.netlify.app">CYBER_SYNTAX</a> · Web Developer · Creative Designer · Security first</footer>
+<script>
+const common=["password","123456","12345678","qwerty","abc123","111111","123123","admin","letmein","welcome","iloveyou","monkey","dragon","football","naija","nigeria","lagos","jesus","god","love","princess","sunshine","000000","654321","password1","qwerty123"];
+const words=["mango","lagos","river","pixel","jollof","falcon","neon","ankara","thunder","cobalt","orbit","harmattan","palm","quantum","drum","cipher","ember","savanna","rocket","velvet"];
+const $=i=>document.getElementById(i),pw=$("pw");
+function analyse(p){const l=p.toLowerCase(),c={len:p.length>=12,low:/[a-z]/.test(p),up:/[A-Z]/.test(p),num:/\d/.test(p),sym:/[^A-Za-z0-9]/.test(p),
+common:!common.some(w=>l.includes(w)),rep:!/(.)\1\1/.test(p),seq:!/(abc|bcd|cde|123|234|345|456|567|678|789|qwe|wer|asd)/i.test(p)};
+let pool=(c.low?26:0)+(c.up?26:0)+(c.num?10:0)+(c.sym?33:0);let bits=p.length*Math.log2(pool||1);
+if(!c.common)bits=Math.min(bits,10);if(!c.rep)bits*=.8;if(!c.seq)bits*=.85;return{c,bits}}
+function crack(b){const s=Math.pow(2,b)/1e10;if(s<1)return"instantly";const u=[[31536e6,"centuries"],[31536e3,"years"],[2592e3,"months"],[86400,"days"],[3600,"hours"],[60,"minutes"],[1,"seconds"]];
+for(const[v,n]of u)if(s>=v){const x=Math.round(s/v);return n=="centuries"?(x>1e6?"millions of years":x*100+" years"):x+" "+n}}
+function render(){const p=pw.value,{c,bits}=analyse(p);const items=[["len","At least 12 characters"],["low","Lowercase letter"],["up","Uppercase letter"],["num","Number"],["sym","Symbol (!@#…)"],["common","Not a common password or word"],["rep","No 3 repeated characters"],["seq","No easy sequences (123, abc, qwe)"]];
+$("ck").innerHTML=items.map(([k,t])=>`<li class="${p&&c[k]?"y":""}">${t}</li>`).join("");
+const tips=[];if(!p){$("tips").innerHTML="<li>Start typing to see tips.</li>"}else{
+if(!c.len)tips.push(`Add ${12-p.length} more character(s). Length matters more than anything else.`);if(!c.common)tips.push("This contains a very common password. Attackers try these first.");
+if(!c.up||!c.low)tips.push("Mix uppercase and lowercase letters.");if(!c.num)tips.push("Add a number, but not at the end only (like Name1).");if(!c.sym)tips.push("Add a symbol such as ! # or %.");
+if(!c.seq||!c.rep)tips.push("Avoid patterns and repeats; they are easy to guess.");tips.push("Never reuse this password on other sites.","Turn on two-factor authentication (2FA) where you can.");
+$("tips").innerHTML=tips.map(t=>`<li>${t}</li>`).join("")}
+const lv=!p?["—",0,"#333"]:bits<28?["Very weak",15,"var(--bad)"]:bits<40?["Weak",35,"var(--bad)"]:bits<60?["Fair",60,"var(--mid)"]:bits<80?["Strong",82,"var(--ok)"]:["Very strong",100,"var(--ok)"];
+$("lvl").textContent=lv[0];$("lvl").style.color=lv[2];$("fill").style.width=lv[1]+"%";$("fill").style.background=lv[2];$("ct").textContent=p?crack(bits):"—"}
+pw.addEventListener("input",render);$("tg").onclick=()=>{const s=pw.type=="password";pw.type=s?"text":"password";$("tg").textContent=s?"Hide":"Show"};
+$("gen").onclick=()=>{const r=n=>{const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%n};const w=[0,1,2,3].map(()=>{const x=words[r(words.length)];return x[0].toUpperCase()+x.slice(1)});
+const p=w.join("-")+"-"+r(100)+"!";$("pp").textContent=p;pw.value=p;pw.type="text";$("tg").textContent="Hide";render()};render();
+</script></body></html>
