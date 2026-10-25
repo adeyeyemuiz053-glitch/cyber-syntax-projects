@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Binary Search Visualizer | CYBER_SYNTAX</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#05060f;color:#e5e7eb;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;padding:24px 5vw}
+a{color:#06b6d4}
+h1{font-size:clamp(1.6rem,4vw,2.4rem);background:linear-gradient(90deg,#06b6d4,#7c3aed,#f472b6);-webkit-background-clip:text;color:transparent}
+.sub{color:#94a3b8;margin:6px 0 20px}
+.panel{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;margin-bottom:16px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+input{background:#0b0d1c;border:1px solid #334155;color:#fff;border-radius:8px;padding:9px 10px;width:110px}
+button{background:linear-gradient(90deg,#7c3aed,#06b6d4);border:0;color:#fff;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer}
+button.alt{background:#1e293b}
+button:disabled{opacity:.4;cursor:default}
+label{color:#94a3b8;font-size:.9rem}
+#arr{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:20px 0}
+.cell{width:58px;text-align:center;transition:all .35s}
+.box{height:58px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:#111827;border:2px solid #334155;font-weight:800;font-size:1.1rem;transition:all .35s}
+.idx{font-size:.75rem;color:#64748b;margin-top:4px}
+.tag{font-size:.7rem;font-weight:800;height:16px;margin-top:2px}
+.out .box{opacity:.2}
+.range .box{border-color:#7c3aed}
+.mid .box{background:#7c3aed;border-color:#f472b6;transform:translateY(-8px) scale(1.08);box-shadow:0 0 20px #7c3aed}
+.found .box{background:#16a34a;border-color:#4ade80;box-shadow:0 0 24px #22c55e;transform:scale(1.12)}
+#msg{font-size:1.05rem;min-height:48px;text-align:center}
+.stats{display:flex;gap:20px;justify-content:center;color:#94a3b8;flex-wrap:wrap}
+.stats b{color:#fff}
+pre{background:#0b0d1c;border-radius:10px;padding:14px;overflow:auto;font-size:.85rem;line-height:1.55}
+.hl{background:rgba(124,58,237,.35);display:block}
+ul{margin-left:20px;color:#cbd5e1;line-height:1.7}
+</style></head><body>
+<a href="../">← Back to CYBER_SYNTAX</a>
+<h1 style="margin-top:12px">Binary Search Visualizer</h1>
+<p class="sub">Watch how binary search finds a number in a sorted list by halving the search space every step.</p>
+<div class="panel controls">
+<label>Target <input id="target" type="number" value="23"></label>
+<button id="start">Start</button>
+<button id="step" class="alt" disabled>Next step</button>
+<button id="auto" class="alt" disabled>Auto play</button>
+<button id="rand" class="alt">New random list</button>
+</div>
+<div class="panel"><div id="arr"></div><div id="msg">Pick a target and press Start.</div>
+<div class="stats"><span>low: <b id="sl">-</b></span><span>high: <b id="sh">-</b></span><span>mid: <b id="sm">-</b></span><span>checks: <b id="sc">0</b></span><span>linear search would need: <b id="sn">-</b></span></div></div>
+<div class="panel"><pre id="code"></pre></div>
+<div class="panel"><b>Why it matters</b><ul>
+<li><b>Time:</b> O(log n). 1,000,000 items need about 20 checks.</li>
+<li><b>Space:</b> O(1). Only two pointers are kept.</li>
+<li><b>Catch:</b> the list must be sorted first.</li>
+<li><b>Trap:</b> use <code>low &lt;= high</code>, and always move with <code>mid + 1</code> / <code>mid - 1</code>.</li></ul></div>
+<p class="sub">Built by Muiz · CYBER_SYNTAX</p>
+<script>
+const L=["function binarySearch(arr, target) {","  let low = 0, high = arr.length - 1;","  while (low <= high) {","    const mid = Math.floor((low + high) / 2);","    if (arr[mid] === target) return mid;","    if (arr[mid] < target) low = mid + 1;","    else high = mid - 1;","  }","  return -1;","}"];
+let arr=[2,5,8,12,16,23,38,56,72,91],low,high,mid,checks,target,done=true,timer=null;
+const $=id=>document.getElementById(id);
+function code(n){$("code").innerHTML=L.map((l,i)=>`<span class="${i===n?'hl':''}">${l.replace(/</g,'&lt;')}</span>`).join("\n")}
+function draw(found){
+ $("arr").innerHTML=arr.map((v,i)=>{let c="cell";if(!done||found!==undefined){if(i===found)c+=" found";else if(low!==undefined&&(i<low||i>high))c+=" out";else if(i===mid&&found===undefined)c+=" mid";else if(low!==undefined)c+=" range"}
+ let t=[];if(!done){if(i===low)t.push("L");if(i===mid)t.push("M");if(i===high)t.push("H")}
+ return `<div class="${c}"><div class="box">${v}</div><div class="idx">${i}</div><div class="tag" style="color:#f472b6">${t.join(" ")}</div></div>`}).join("");
+ $("sl").textContent=low??"-";$("sh").textContent=high??"-";$("sm").textContent=mid??"-";$("sc").textContent=checks||0}
+function reset(){clearInterval(timer);timer=null;low=high=mid=undefined;checks=0;done=true;$("step").disabled=$("auto").disabled=true;$("auto").textContent="Auto play";$("sn").textContent="-";code(-1);draw()}
+function start(){reset();target=+$("target").value;low=0;high=arr.length-1;done=false;mid=undefined;
+ const li=arr.indexOf(target);$("sn").textContent=li<0?arr.length:li+1;
+ $("msg").textContent=`Searching for ${target}. low=0, high=${high}.`;code(1);$("step").disabled=$("auto").disabled=false;draw()}
+function step(){if(done)return;
+ if(low>high){finish(-1);return}
+ mid=Math.floor((low+high)/2);checks++;const v=arr[mid];
+ if(v===target){finish(mid);return}
+ if(v<target){$("msg").textContent=`Check ${checks}: arr[${mid}] = ${v} < ${target}, so throw away the left half. low = ${mid+1}`;code(5);low=mid+1}
+ else{$("msg").textContent=`Check ${checks}: arr[${mid}] = ${v} > ${target}, so throw away the right half. high = ${mid-1}`;code(6);high=mid-1}
+ draw();if(low>high){/*next step ends*/}}
+function finish(i){done=true;clearInterval(timer);timer=null;$("step").disabled=$("auto").disabled=true;$("auto").textContent="Auto play";
+ if(i>=0){$("msg").innerHTML=`✅ Found ${target} at index ${i} in <b>${checks}</b> checks.`;code(4);draw(i)}
+ else{$("msg").innerHTML=`❌ ${target} is not in the list (low passed high after ${checks} checks).`;code(8);mid=undefined;draw(-2)}}
+$("start").onclick=start;$("step").onclick=step;
+$("auto").onclick=()=>{if(timer){clearInterval(timer);timer=null;$("auto").textContent="Auto play"}else{timer=setInterval(step,1100);$("auto").textContent="Pause"}};
+$("rand").onclick=()=>{const s=new Set();while(s.size<12)s.add(1+Math.floor(Math.random()*99));arr=[...s].sort((a,b)=>a-b);$("target").value=arr[Math.floor(Math.random()*12)];$("msg").textContent="New list ready. Press Start.";reset()};
+reset();
+</script></body></html>
