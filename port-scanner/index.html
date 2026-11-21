@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Port Scanner Visualizer | CYBER_SYNTAX</title><link rel="stylesheet" href="../cs.css"><style>#g{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px}.port{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px;text-align:center;font-size:13px;transition:.3s}.port.open{background:#0f3d1e;border-color:#39d353}.port.closed{background:#3d0f0f;border-color:#f85149}.port.filtered{background:#3d300f;border-color:#f0b429}.scan{outline:2px solid #58a6ff}#log{height:180px;overflow:auto;font-size:12px}</style></head><body>
+<a href="https://cyber-syntax.netlify.app">← Back to CYBER_SYNTAX</a><h1>📡 Port Scanner Visualizer</h1>
+<p>A <b>simulated</b> scan of a fictional host (10.0.0.42) showing how TCP scans work. No real network traffic is sent.</p>
+<select id="m"><option value="syn">SYN scan (half-open, nmap -sS)</option><option value="connect">TCP connect scan (nmap -sT)</option></select>
+<button onclick="run()">Start scan</button><button onclick="reset()">Reset</button> <span id="st"></span>
+<div class="card"><span class="ok">■ open</span> &nbsp; <span class="bad">■ closed</span> &nbsp; <span class="warn">■ filtered (firewall)</span></div>
+<div id="g"></div><div class="card"><h3>Packet log</h3><pre id="log"></pre></div><div class="card" id="rep"></div>
+<div class="card"><h3>How it works</h3><p><b>Open:</b> the port replies SYN-ACK. <b>Closed:</b> it replies RST. <b>Filtered:</b> no reply, because a firewall dropped the packet. A SYN scan answers with RST instead of finishing the handshake, so it is faster and quieter. A connect scan completes the handshake and is easier to log. Only scan systems you own or have written permission to test.</p></div>
+<script>
+const P=[[21,'FTP','open','Plain-text logins. Prefer SFTP.'],[22,'SSH','open','Use keys and disable root login.'],[23,'Telnet','closed'],[25,'SMTP','filtered'],[53,'DNS','closed'],[80,'HTTP','open','Unencrypted. Redirect to HTTPS.'],[110,'POP3','closed'],[135,'MSRPC','filtered'],[139,'NetBIOS','filtered'],[143,'IMAP','closed'],[443,'HTTPS','open','Good. Check the TLS version.'],[445,'SMB','filtered'],[3306,'MySQL','open','Database exposed! Bind it to localhost.'],[3389,'RDP','closed'],[5432,'Postgres','closed'],[6379,'Redis','open','Often has no auth. Never expose it publicly.'],[8080,'HTTP-alt','filtered'],[27017,'MongoDB','closed']];
+let run_id=0;function reset(){run_id++;g.innerHTML=P.map(p=>'<div class="port" id="p'+p[0]+'">'+p[0]+'<br><small>'+p[1]+'</small></div>').join('');log.textContent='';rep.innerHTML='';st.textContent=''}
+const L=s=>{log.textContent+=s+'\n';log.scrollTop=1e9},w=ms=>new Promise(r=>setTimeout(r,ms));
+async function run(){reset();const id=run_id,syn=m.value==='syn',t0=Date.now();L('Starting '+(syn?'SYN':'connect')+' scan of 10.0.0.42 ('+P.length+' ports)');
+for(const [n,s,state] of P){if(id!==run_id)return;const el=document.getElementById('p'+n);el.classList.add('scan');st.textContent='Scanning '+n;L('→ SYN to :'+n);await w(state==='filtered'?700:250);if(id!==run_id)return;
+if(state==='open'){L('← SYN-ACK from :'+n+'  OPEN');L(syn?'→ RST (half-open: handshake never completed)':'→ ACK (handshake complete), then RST')}else if(state==='closed')L('← RST from :'+n+'  CLOSED');else L('… no reply from :'+n+' (timeout)  FILTERED');
+el.classList.remove('scan');el.classList.add(state);await w(80)}
+const c=k=>P.filter(p=>p[2]==k),o=c('open');st.textContent='Done in '+((Date.now()-t0)/1000).toFixed(1)+'s';
+rep.innerHTML='<h3>Report: '+o.length+' open, '+c('closed').length+' closed, '+c('filtered').length+' filtered</h3><ul>'+o.map(p=>'<li><b>'+p[0]+'/'+p[1]+'</b>: '+p[3]+'</li>').join('')+'</ul>'}
+reset();
+</script></body></html>
