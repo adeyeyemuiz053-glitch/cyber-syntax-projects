@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>JWT Decoder & Security Checker | CYBER_SYNTAX</title><link rel="stylesheet" href="../cs.css"><style>.h{color:#f85149}.p{color:#d2a8ff}.s{color:#58a6ff}</style></head><body>
+<a href="https://cyber-syntax.netlify.app">← Back to CYBER_SYNTAX</a><h1>🔐 JWT Decoder & Security Checker</h1>
+<p>Paste a JSON Web Token. Everything runs in your browser; nothing is sent anywhere.</p>
+<textarea id="t" rows="5"></textarea><button onclick="go()">Decode & audit</button><button onclick="sample()">Load insecure sample</button>
+<div id="col" class="card"></div><div class="card"><h3>Header</h3><pre id="h"></pre><h3>Payload</h3><pre id="p"></pre></div><div class="card"><h3>Security audit</h3><ul id="a"></ul></div>
+<div class="card"><h3>Learn</h3><p>A JWT is <b>header.payload.signature</b>, each Base64URL-encoded. Decoding is not verifying: anyone can read the payload, so never put secrets in it. Only the signature, checked on the server with the key, proves it is genuine.</p></div>
+<script>
+function b64(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return decodeURIComponent(atob(s).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''))}
+function e(o){return btoa(JSON.stringify(o)).replace(/=/g,'').replace(/\+/g,'-').replace(/\//g,'_')}
+function sample(){t.value=e({alg:'none',typ:'JWT'})+'.'+e({sub:'1234',name:'Muiz',role:'admin',password:'hunter2',iat:1600000000})+'.';go()}
+function go(){const parts=t.value.trim().split('.'),A=[],add=(c,m)=>A.push('<li class="'+c+'">'+m+'</li>');
+if(parts.length!==3){a.innerHTML='<li class="bad">Not a valid JWT: expected 3 parts separated by dots.</li>';return}
+col.innerHTML='<pre><span class="h">'+parts[0]+'</span>.<span class="p">'+parts[1]+'</span>.<span class="s">'+parts[2]+'</span></pre>';
+let H,P;try{H=JSON.parse(b64(parts[0]));P=JSON.parse(b64(parts[1]))}catch(x){a.innerHTML='<li class="bad">Could not decode: '+x.message+'</li>';return}
+h.textContent=JSON.stringify(H,null,2);p.textContent=JSON.stringify(P,null,2);const now=Date.now()/1000,alg=(H.alg||'').toLowerCase();
+if(alg==='none')add('bad','alg "none": the token is unsigned. A server that accepts it can be fooled by forged tokens.');
+else if(alg.startsWith('hs'))add('warn','Algorithm '+H.alg+' (shared secret). Weak HS256 secrets can be brute-forced; use a long random one.');
+else add('ok','Algorithm '+H.alg+' (asymmetric signature).');
+if(!parts[2])add('bad','Empty signature.');
+if(H.jku||H.x5u||H.jwk)add('warn','Header points to an external key (jku/x5u/jwk). Servers must not trust keys the token supplies.');
+if(H.kid&&/[\/\\.'";]/.test(H.kid))add('bad','Suspicious "kid" value: possible path traversal or injection.');
+if(!P.exp)add('bad','No "exp" claim: the token never expires.');else if(P.exp<now)add('warn','Expired on '+new Date(P.exp*1000).toLocaleString());else{add('ok','Expires '+new Date(P.exp*1000).toLocaleString());if(P.exp-(P.iat||now)>604800)add('warn','Lifetime over 7 days: more damage if stolen.')}
+if(P.nbf&&P.nbf>now)add('warn','Not valid yet (nbf is in the future).');
+if(!P.iss)add('warn','No "iss" (issuer) claim.');if(!P.aud)add('warn','No "aud" (audience) claim.');
+const sens=Object.keys(P).filter(k=>/pass|secret|ssn|card|cvv|pin|private/i.test(k));if(sens.length)add('bad','Sensitive-looking data in payload: '+sens.join(', ')+'. Anyone can read it.');
+if(P.role||P.admin||P.isAdmin)add('warn','Privilege claim found. The server must verify the signature before trusting it.');
+add('warn','Signature not verified here: that needs the key and belongs on the server.');a.innerHTML=A.join('')}
+</script></body></html>
