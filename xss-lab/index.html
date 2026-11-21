@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>XSS Demo Lab | CYBER_SYNTAX</title><link rel="stylesheet" href="../cs.css"></head><body>
+<a href="https://cyber-syntax.netlify.app">← Back to CYBER_SYNTAX</a><h1>🧪 XSS Demo Lab (safe sandbox)</h1>
+<p>Type a comment and see how a <b class="bad">vulnerable</b> page and a <b class="ok">secure</b> page handle it. The vulnerable output renders inside a sandboxed iframe with no access to this page, your cookies or the network.</p>
+<input id="i" value="&lt;img src=x onerror=&quot;document.body.innerHTML='&lt;h2 style=color:red&gt;Hacked by XSS!&lt;/h2&gt;'&quot;&gt;"><button onclick="go()">Post comment</button>
+<div>Try a payload: <button onclick="s(0)">img onerror</button><button onclick="s(1)">svg onload</button><button onclick="s(2)">fake login form</button><button onclick="s(3)">harmless text</button></div>
+<div class="card"><h3 class="bad">❌ Vulnerable: el.innerHTML = input</h3><iframe id="v" sandbox="allow-scripts"></iframe></div>
+<div class="card"><h3 class="ok">✅ Secure: el.textContent = input</h3><pre id="sf"></pre></div>
+<div class="card"><h3>What the browser sees</h3><pre id="raw"></pre><h3>After escaping</h3><pre id="esc"></pre></div>
+<div class="card"><h3>How to prevent XSS</h3><ul><li>Use <code>textContent</code>, not <code>innerHTML</code>, for user input.</li><li>Escape <code>&lt; &gt; &amp; " '</code> when building HTML on the server.</li><li>If you must allow HTML, clean it with a library like DOMPurify.</li><li>Add a Content-Security-Policy header that blocks inline scripts.</li><li>Set cookies to <code>HttpOnly</code> so scripts can't steal sessions.</li></ul><p class="warn">Only test XSS on apps you own or are authorised to test.</p></div>
+<script>
+const S=[`<img src=x onerror="document.body.innerHTML='<h2 style=color:red>Hacked by XSS!</h2>'">`,`<svg onload="document.body.style.background='#f85149';document.body.append(' svg payload ran!')">`,`<form style="font-family:sans-serif"><b>Session expired, log in again:</b><br><input placeholder="password" type="password"> <button>Login</button></form>`,`Great post, Muiz!`];
+const x=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+function s(k){i.value=S[k];go()}
+function go(){const t=i.value;v.srcdoc='<body style="font-family:sans-serif"><b>Comment:</b> '+t+'</body>';sf.textContent='Comment: '+t;raw.textContent=t;esc.textContent=x(t)}
+go();
+</script></body></html>
